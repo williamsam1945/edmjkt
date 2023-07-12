@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +16,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.auth.login');
 });
 
+Route::get('/home', function () {
+    return view('pages.home.homepage');
+});
+
+Route::get('/login', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class, 'login']);
+
+Route::get('/register', [SessionController::class, 'index']);
+Route::post('/register', [SessionController::class, 'store']);
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
